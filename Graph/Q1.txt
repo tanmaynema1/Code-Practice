@@ -1,0 +1,52 @@
+/*
+Link to Problem:
+https://www.hackerearth.com/problem/algorithm/connected-components-in-a-graph/
+*/
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+
+vector<int>arr1[1001];
+int vis[1001];
+
+void dfs(int node)
+{
+  vis[node] = 1;
+
+  for (int child: arr1[node])
+  {
+    if(!vis[child])
+    {
+      dfs(child);
+    }
+  }
+}
+
+int main() {
+  int n,m;
+  int a,b;
+
+  cin>>n>>m;
+  
+  for (int i = 1; i <= m; i++)
+  {
+    cin>>a>>b;
+    arr1[a].push_back(b);
+    arr1[b].push_back(a);
+  }
+
+  int cc_count = 0;
+
+  for (int i = 1; i <= n; i++)
+  {
+    if(!vis[i])
+    {
+      dfs(i);
+      cc_count++;
+    }
+  }
+
+  cout<<"\n"<<cc_count;
+} 
