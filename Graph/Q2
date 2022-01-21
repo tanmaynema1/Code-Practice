@@ -1,0 +1,67 @@
+// Question based on SSSP 
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+
+vector<int>arr1[1001];
+int vis[1001];
+int dist[1001];
+
+void dfs(int node, int distance)
+{
+  vis[node] = 1;
+  dist[node] = distance;
+
+  for (int child: arr1[node])
+  {
+    if(!vis[child])
+    {
+      dfs(child, dist[node]+1);
+    }
+  }
+}
+
+int main() 
+{
+  int n,m;
+  int a,b;
+
+  cin>>n;
+  
+  for (int i = 1; i <= n-1; i++)
+  {
+    cin>>a>>b;
+    arr1[a].push_back(b);
+    arr1[b].push_back(a);
+  }
+
+  dfs(1, 0);
+
+  cin>>m;
+
+  int mindist = 100001; 
+  int ans = -1;
+
+  while(m--)
+  {
+    int gcity;
+    cin>>gcity;
+
+    if (dist[gcity] < mindist)
+    {
+      mindist = dist[gcity];
+      ans = gcity;
+    }
+    else
+    {
+      if(dist[gcity] == mindist && gcity < ans)
+      {
+        ans = gcity;
+      }
+    }
+  }
+
+  cout<<"\n"<<ans;
+} 
